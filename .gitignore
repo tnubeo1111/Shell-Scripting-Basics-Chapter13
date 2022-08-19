@@ -1,16 +1,249 @@
-# Node rules:
-## Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
-.grunt
+CHAPTER 13 More Structured Commands
 
-## Dependency directory
-## Commenting this out is preferred by some people, see
-## https://docs.npmjs.com/misc/faq#should-i-check-my-node_modules-folder-into-git
-node_modules
 
-# Book build output
-_book
+IN THIS CHAPTER
 
-# eBook build output
-*.epub
-*.mobi
-*.pdf
+Looping with the for statement
+
+Iterating with the until statement
+
+Using the while statement
+
+Combining loops
+
+Redirecting loop output
+
+
+In the previous chapter, you saw how to manipulate the fl ow of a shell script program by checking the output of commands and the values of variables. In this chapter, we continue to look at
+structured commands that control the fl ow of your shell scripts. You’ll see how you can perform
+repeating processes, commands that can loop through a set of commands until an indicated condition has been met. This chapter discusses and demonstrates the for, while, and until bash shell
+looping commands.
+
+#The for Command
+
+Iterating through a series of commands is a common programming practice. Often, you need to
+repeat a set of commands until a specifi c condition has been met, such as processing all the fi les in
+a directory, all the users on a system, or all the lines in a text fi le.
+The bash shell provides the for command to allow you to create a loop that iterates through a
+series of values. Each iteration performs a defi ned set of commands using one of the values in the
+series. Here’s the basic format of the bash shell for command:
+
+       for var in list
+       do
+          commands
+       done
+       
+You supply the series of values used in the iterations in the list parameter. You can specify the values in the list in several ways.
+In each iteration, the variable var contains the current value in the list. The fi rst iteration
+uses the fi rst item in the list, the second iteration the second item, and so on until all the
+items in the list have been used.
+The commands entered between the do and done statements can be one or more standard
+bash shell commands. Within the commands, the $var variable contains the current list
+item value for the iteration. 
+
+##NOTE
+If you prefer, you can include the do statement on the same line as the for statement, but you must separate it
+from the list items using a semicolon: for var in list; do.
+
+We mentioned that there are several different ways to specify the values in the list. The
+following sections show the various ways to do that.
+
+#Reading values in a list
+
+The most basic use of the for command is to iterate through a list of values defi ned within
+the for command itself:
+
+       $ cat test1
+       #!/bin/bash
+       # basic for command
+       for test in Alabama Alaska Arizona Arkansas California Colorado
+       do
+            echo The next state is $test
+       done
+ 
+       $ ./test1
+       The next state is Alabama
+       The next state is Alaska
+       The next state is Arizona
+       The next state is Arkansas
+       The next state is California
+       The next state is Colorado
+       $
+ 
+Each time the for command iterates through the list of values provided, it assigns the
+$test variable the next value in the list. The $test variable can be used just like any
+other script variable within the for command statements. After the last iteration, the
+$test variable remains valid throughout the remainder of the shell script. It retains the
+last iteration value (unless you change its value):
+
+       $ cat test1b
+       #!/bin/bash
+      # testing the for variable after the looping
+       for test in Alabama Alaska Arizona Arkansas California Colorado
+       do
+       echo "The next state is $test"
+       done
+       echo "The last state we visited was $test"
+       test=Connecticut
+       echo "Wait, now we're visiting $test"
+       $ ./test1b
+       The next state is Alabama
+       The next state is Alaska
+       The next state is Arizona
+       The next state is Arkansas
+       The next state is California
+       The next state is Colorado
+       The last state we visited was Colorado
+       Wait, now we are visiting Connecticut
+       $
+
+The $test variable retained its value and allowed us to change the value and use it outside
+of the for command loop, as any other variable would.
+Reading complex values in a list
+Things aren’t always as easy as they seem with the for loop. There are times when you
+run into data that causes problems. Here’s a classic example of what can cause problems for
+shell script programmers:
+
+       $ cat badtest1
+       #!/bin/bash
+       # another example of how not to use the for command
+       for test in I don't know if this'll work
+       do
+       echo "word:$test"
+       done
+       $ ./badtest1
+       word:I
+       word:dont know if thisll
+       word:work
+       $
+ 
+Ouch, that hurts. The shell saw the single quotation marks within the list values and
+attempted to use them to defi ne a single data value, and it really messed things up in the
+process.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
